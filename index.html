@@ -1,102 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shasank Dixit | Ph.D. Scholar</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-left: 40px;
-            border-left: 2px solid #233554;
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
+
+        :root {
+            --bg-color: #0a192f;
+            --card-bg: #112240;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --accent-color: #64ffda;
+            --font-main: 'Inter', sans-serif;
+            --font-code: 'Fira Code', monospace;
         }
-        /* The Timeline Dot */
-        .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -49px; /* Centers dot on the line */
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
+
+        body {
             background-color: var(--bg-color);
-            border: 2px solid var(--accent-color);
-            transition: background-color 0.3s, box-shadow 0.3s;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .timeline-item:hover::before {
-            background-color: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            width: 100%;
+            background-color: rgba(10, 25, 47, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
-        .timeline-content {
-            background-color: var(--card-bg);
-            padding: 25px 30px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border-top: 2px solid transparent;
+
+        .logo {
+            font-family: var(--font-code);
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2rem;
         }
-        .timeline-content:hover {
-            transform: translateY(-5px);
-            border-top: 2px solid var(--accent-color);
-            background-color: #152749;
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
         }
-        .timeline-title {
-            font-size: 1.3rem;
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-highlight {
+            border: 1px solid var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: var(--accent-color) !important;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 100px;
+            gap: 50px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .profile-container {
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.6);
+        }
+
+        .greeting {
+            font-size: 3rem;
             color: #e6f1ff;
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            margin-bottom: 10px;
+            line-height: 1.1;
         }
-        .timeline-title i {
+
+        .name-highlight {
             color: var(--accent-color);
-            font-size: 1.4rem;
         }
-        .timeline-subtitle {
-            color: var(--accent-color);
+
+        .typewriter {
             font-family: var(--font-code);
-            font-size: 1rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .timeline-time {
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: #8892b0;
-            margin-bottom: 15px;
-            display: inline-block;
-            background-color: rgba(100, 255, 218, 0.1);
-            padding: 4px 12px;
-            border-radius: 15px;
-        }
-        .timeline-details ul {
-            list-style-type: none;
-            padding-left: 0;
+            font-size: 1.5rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            margin-bottom: 20px;
+            height: 30px;
         }
-        .timeline-details li {
-            position: relative;
-            padding-left: 20px;
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .tech-stack {
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .tech-stack i {
+            margin-right: 20px;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .tech-stack i:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .buttons .btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .btn.primary {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn.primary:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+
+        .btn.secondary {
+            color: var(--text-primary);
+            border: 1px solid #233554;
+        }
+
+        .terminal-window {
+            width: 450px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            font-family: var(--font-code);
+            border: 1px solid #333;
+        }
+
+        .terminal-header {
+            background-color: #2d2d2d;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            color: #d4d4d4;
+            font-size: 14px;
+        }
+
+        .prompt { color: var(--accent-color); }
+        .response { color: #888; margin-bottom: 10px; }
+        .code-output { color: #ce9178; margin-bottom: 10px; }
+        .blink { animation: blink 1s infinite; }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .section {
+            padding: 80px 100px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            margin-bottom: 35px;
+            color: #e6f1ff;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 200px;
+            height: 1px;
+            background-color: #233554;
+            margin-left: 20px;
+        }
+
+        .simple-wrap {
+            max-width: 900px;
+        }
+
+        .simple-item {
+            margin-bottom: 26px;
+            padding: 18px 0;
+            border-bottom: 1px solid #233554;
+        }
+
+        .simple-item h3 {
+            color: #e6f1ff;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
+        .simple-item .meta {
+            color: var(--accent-color);
+            font-family: var(--font-code);
+            font-size: 0.92rem;
             margin-bottom: 8px;
         }
-        .timeline-details li::before {
-            content: "▹";
-            position: absolute;
-            left: 0;
+
+        .simple-item p,
+        .simple-item li {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        .simple-item ul {
+            margin-top: 8px;
+            padding-left: 18px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
             color: var(--accent-color);
+        }
+
+        .card-links a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+
+        .card-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .card h3 {
+            color: #e6f1ff;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 100px 30px 50px;
+                text-align: center;
+            }
+
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .terminal-window {
+                width: 100%;
+                display: none;
+            }
+
+            .section {
+                padding: 50px 20px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .section-title::after {
+                width: 100px;
+            }
         }
     </style>
 </head>
@@ -106,7 +375,7 @@
         <div class="logo">&lt;Shasank.D /&gt;</div>
         <div class="nav-links">
             <a href="#home">Home</a>
-            <a href="#experience">Experience</a> 
+            <a href="#experience">Experience</a>
             <a href="#education">Education</a>
             <a href="#publications">Publications</a>
             <a href="#projects">Projects</a>
@@ -116,7 +385,6 @@
 
     <section class="hero" id="home">
         <div class="hero-content">
-            
             <div class="profile-container">
                 <img src="https://ui-avatars.com/api/?name=Shasank+Dixit&background=112240&color=64ffda&size=200" alt="Shasank Dixit" class="profile-img">
             </div>
@@ -125,9 +393,9 @@
             <div class="typewriter">
                 <span id="typing-text"></span><span class="cursor">|</span>
             </div>
-            
+
             <p class="subtitle">Doctoral researcher at IIT Jodhpur. Specializing in Networks for AI, Distributed Training, Graph Neural Networks, and 5G.</p>
-            
+
             <div class="tech-stack">
                 <i class="fa-brands fa-python" title="Python"></i>
                 <i class="fa-solid fa-c" title="C / C++"></i>
@@ -172,221 +440,121 @@
         </div>
     </section>
 
-    <section class="projects" id="experience">
+    <section class="section" id="experience">
         <h2 class="section-title">Work Experience</h2>
-        <div class="timeline">
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-flask"></i> Doctoral Researcher
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> IIT Jodhpur (Intelligent Network Lab)
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> July 2025 - Present</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li>Researching "AI for Networking and Networking for AI" under Dr. Sidharth Sharma.</li>
-                            <li>Focusing on optimizing Distributed Deep Neural Network (DDNN) training to mitigate communication bottlenecks in AI Data Centers.</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="simple-wrap">
+            <div class="simple-item">
+                <h3>Doctoral Researcher</h3>
+                <div class="meta">IIT Jodhpur (Intelligent Network Lab) | July 2025 - Present</div>
+                <ul>
+                    <li>Researching “AI for Networking and Networking for AI” under Dr. Sidharth Sharma.</li>
+                    <li>Focusing on optimizing Distributed Deep Neural Network training to mitigate communication bottlenecks in AI data centers.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-microscope"></i> Junior Research Fellow
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> IIT Indore
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> Sep 2024 - July 2025</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li>Developed a Self-optimized Network Digital Twin (NDT) for 5G and beyond networks.</li>
-                            <li>Implemented GNN-Assisted Reinforcement Learning for slice management in Functionally Split vRANs.</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>Junior Research Fellow</h3>
+                <div class="meta">IIT Indore | Sep 2024 - July 2025</div>
+                <ul>
+                    <li>Developed a Self-optimized Network Digital Twin for 5G and beyond networks.</li>
+                    <li>Implemented GNN-assisted Reinforcement Learning for slice management in Functionally Split vRANs.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-microscope"></i> Junior Research Fellow
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> Assam University
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> April 2024 - Aug 2024</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li>Developed a Multiple Self-Organizing Maps (SOM) model to cluster Land Use/Land Cover objects in Multi-Spectral Images.</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>Junior Research Fellow</h3>
+                <div class="meta">Assam University | April 2024 - Aug 2024</div>
+                <ul>
+                    <li>Developed a Multiple Self-Organizing Maps model to cluster Land Use/Land Cover objects in multi-spectral images.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-chalkboard-user"></i> PGT - Computer Science
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-school"></i> Kendriya Vidyalaya BSF Raninagar
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> Nov 2023 - April 2024</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li>Served as IT infrastructure head and taught Computer Science, Informatics Practices, and Data Science.</li>
-                            <li>Reviewed as an "Outstanding grade" Computer Science teacher by KVS annual Panel visit.</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>PGT - Computer Science</h3>
+                <div class="meta">Kendriya Vidyalaya BSF Raninagar | Nov 2023 - April 2024</div>
+                <ul>
+                    <li>Served as IT infrastructure head and taught Computer Science, Informatics Practices, and Data Science.</li>
+                    <li>Reviewed as an “Outstanding grade” Computer Science teacher by KVS annual panel visit.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-code"></i> Research Intern
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> Visva Bharati University
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> June 2023 - Aug 2023</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li>Developed a Graph Neural Network (GNN) model leveraging edge importance for node classification.</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>Research Intern</h3>
+                <div class="meta">Visva Bharati University | June 2023 - Aug 2023</div>
+                <ul>
+                    <li>Developed a Graph Neural Network model leveraging edge importance for node classification.</li>
+                </ul>
             </div>
-
         </div>
     </section>
 
-    <section class="projects" id="education" style="padding-top: 0;">
+    <section class="section" id="education">
         <h2 class="section-title">Education</h2>
-        <div class="timeline">
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-graduation-cap"></i> Ph.D. in Computer Science & Engineering
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> Indian Institute of Technology (IIT), Jodhpur
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> 2025 - Present</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li><strong>CGPA:</strong> 8.00 (1st Semester)</li>
-                            <li>Awarded the prestigious MoE Fellowship.</li>
-                            <li>Coursework & research focused on Advanced Networking, AI/ML, and Distributed Systems.</li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="simple-wrap">
+            <div class="simple-item">
+                <h3>Ph.D. in Computer Science & Engineering</h3>
+                <div class="meta">Indian Institute of Technology (IIT), Jodhpur | 2025 - Present</div>
+                <ul>
+                    <li>CGPA: 8.00 (1st Semester)</li>
+                    <li>Awarded the MoE Fellowship.</li>
+                    <li>Coursework and research focused on Advanced Networking, AI/ML, and Distributed Systems.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-graduation-cap"></i> M.Sc. in Computer Science
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> Visva Bharati University (INI)
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> 2021 - 2023</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li><strong>CGPA:</strong> 7.60 </li>
-                            <li>Cleared UGC-NET DEC-2023 in Computer Science with 99 percentile (1st attempt).</li>
-                            <li>Master's Thesis: Graph Neural Networks leveraging edge importance for enhanced node classification in heterophily networks.</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>M.Sc. in Computer Science</h3>
+                <div class="meta">Visva Bharati University (INI) | 2021 - 2023</div>
+                <ul>
+                    <li>CGPA: 7.60</li>
+                    <li>Cleared UGC-NET DEC-2023 in Computer Science with 99 percentile (1st attempt).</li>
+                    <li>Master’s thesis: Graph Neural Networks leveraging edge importance for enhanced node classification in heterophily networks.</li>
+                </ul>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <div class="timeline-title">
-                        <i class="fa-solid fa-graduation-cap"></i> B.Sc. in Computer Science
-                    </div>
-                    <div class="timeline-subtitle">
-                        <i class="fa-solid fa-building-columns"></i> University of North Bengal
-                    </div>
-                    <div class="timeline-time"><i class="fa-regular fa-calendar-days"></i> 2018 - 2021</div>
-                    <div class="timeline-details">
-                        <ul>
-                            <li><strong>CGPA:</strong> 8.44 (Distinction) </li>
-                            <li>Project: Estimation of Soil Macro-nutrients Level Using Voting Classifier (Published).</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="simple-item">
+                <h3>B.Sc. in Computer Science</h3>
+                <div class="meta">University of North Bengal | 2018 - 2021</div>
+                <ul>
+                    <li>CGPA: 8.44 (Distinction)</li>
+                    <li>Project: Estimation of Soil Macro-nutrients Level Using Voting Classifier (Published).</li>
+                </ul>
             </div>
-
         </div>
     </section>
 
-    <section class="projects" id="publications" style="padding-top: 0;">
+    <section class="section" id="publications">
         <h2 class="section-title">Research Publications</h2>
-        <div class="project-grid">
-            
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa-solid fa-book-open"></i>
-                    <div class="card-links"><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                </div>
-                <h3>Slice-Aware VNF Placement</h3> 
+        <div class="simple-wrap">
+            <div class="simple-item">
+                <h3>Slice-Aware VNF Placement</h3>
+                <div class="meta">Submitted: IEEE TNSM</div>
                 <p>Reliable and Slice-Aware VNF Placement with Lightpath Provisioning in 5G Virtualized RANs.</p>
-                <div class="card-tags">
-                    <span style="border-color: #e6f1ff; color: #e6f1ff;">Submitted: IEEE TNSM</span>
-                    <span>5G vRAN</span>
-                </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa-solid fa-book-open"></i>
-                    <div class="card-links"><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                </div>
-                <h3>Soil Nutrient Estimation</h3> 
+            <div class="simple-item">
+                <h3>Soil Nutrient Estimation</h3>
+                <div class="meta">Published: Springer</div>
                 <p>Estimation of soil macronutrients using voting classifiers. Proceedings of ICCCT 2022.</p>
-                <div class="card-tags">
-                    <span style="border-color: #64ffda; color: #64ffda;">Published: Springer</span>
-                    <span>ML</span>
-                </div>
             </div>
 
-             <div class="card">
-                <div class="card-header">
-                    <i class="fa-solid fa-pen-nib"></i>
-                    <div class="card-links"><a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                </div>
-                <h3>GNN Slice Management</h3> 
+            <div class="simple-item">
+                <h3>GNN Slice Management</h3>
+                <div class="meta">Ongoing Work</div>
                 <p>GNN-Assisted Reinforcement Learning for Reliable Slice Management in Functionally Split vRANs.</p>
-                <div class="card-tags">
-                    <span style="border-color: #ffbd2e; color: #ffbd2e;">Ongoing Work</span>
-                    <span>GNN</span>
-                </div>
             </div>
-
         </div>
     </section>
 
-    <section class="projects" id="projects" style="padding-top: 0;">
+    <section class="section" id="projects">
         <h2 class="section-title">Technical Projects</h2>
         <div class="project-grid">
-            
             <div class="card">
                 <div class="card-header">
                     <i class="fa-solid fa-network-wired"></i>
                     <div class="card-links"><a href="#"><i class="fa-brands fa-github"></i></a></div>
                 </div>
-                <h3>5G Network Digital Twin</h3> 
-                <p>Built a Self-optimized Network Digital Twin (NDT) for 5G networks using Reinforcement Learning.</p>
+                <h3>5G Network Digital Twin</h3>
+                <p>Built a Self-optimized Network Digital Twin for 5G networks using Reinforcement Learning.</p>
                 <div class="card-tags"><span>NS3</span><span>Python</span><span>RL</span></div>
             </div>
 
@@ -395,8 +563,8 @@
                     <i class="fa-solid fa-share-nodes"></i>
                     <div class="card-links"><a href="#"><i class="fa-brands fa-github"></i></a></div>
                 </div>
-                <h3>EdgeSAGE GNN Model</h3> 
-                <p>Engineered a GNN model leveraging edge features for enhanced node classification (M.Sc. Thesis).</p>
+                <h3>EdgeSAGE GNN Model</h3>
+                <p>Engineered a GNN model leveraging edge features for enhanced node classification (M.Sc. thesis).</p>
                 <div class="card-tags"><span>PyTorch</span><span>Graph Theory</span><span>Latex</span></div>
             </div>
 
@@ -405,8 +573,8 @@
                     <i class="fa-solid fa-server"></i>
                     <div class="card-links"><a href="#"><i class="fa-brands fa-github"></i></a></div>
                 </div>
-                <h3>DDNN Optimization</h3> 
-                <p>Mitigating communication bottlenecks in AI Data Centers for Distributed Deep Neural Network training.</p>
+                <h3>DDNN Optimization</h3>
+                <p>Mitigating communication bottlenecks in AI data centers for distributed deep neural network training.</p>
                 <div class="card-tags"><span>Distributed Systems</span><span>AI</span><span>Networking</span></div>
             </div>
 
@@ -415,14 +583,49 @@
                     <i class="fa-solid fa-shield-halved"></i>
                     <div class="card-links"><a href="#"><i class="fa-brands fa-github"></i></a></div>
                 </div>
-                <h3>Anomaly Detection System</h3> 
-                <p>Fine-tuned a large-scale Residual-based GNN to detect anomalies in social graphs with 100k+ nodes.</p>
+                <h3>Anomaly Detection System</h3>
+                <p>Fine-tuned a large-scale residual-based GNN to detect anomalies in social graphs with 100k+ nodes.</p>
                 <div class="card-tags"><span>Big Data</span><span>GNN</span><span>Cybersecurity</span></div>
             </div>
-
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <script>
+        const textElement = document.getElementById('typing-text');
+
+        const texts = [
+            'a Doctoral Researcher',
+            'Working in',
+            'Networks for AI',
+            'Distributed Training',
+            'Network Foundation Model',
+            'and Graph Neural Networks'
+        ];
+
+        let count = 0;
+        let index = 0;
+        let currentText = '';
+        let letter = '';
+
+        function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            textElement.textContent = letter;
+
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000);
+            } else {
+                setTimeout(type, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
 </body>
 </html>
