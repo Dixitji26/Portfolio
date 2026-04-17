@@ -289,7 +289,34 @@ body {
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+}
 
+.status-submitted {
+    color: #ffbd2e;
+    border-color: #ffbd2e;
+    background: rgba(255, 189, 46, 0.08);
+}
+
+.status-published {
+    color: #64ffda;
+    border-color: #64ffda;
+    background: rgba(100, 255, 218, 0.08);
+}
+
+.status-ongoing {
+    color: #ff7b72;
+    border-color: #ff7b72;
+    background: rgba(255, 123, 114, 0.08);
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .hero {
